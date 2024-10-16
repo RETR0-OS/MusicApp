@@ -1,0 +1,134 @@
+/* Playlist Section */
+.playlist-section {
+    padding: 20px 40px;
+}
+
+/* Padding at the bottom so songs don't get hidden behind the music player */
+.song-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 140px; /* Extra padding to avoid songs being hidden behind player */
+}
+
+.song-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.song-item:hover {
+    transform: scale(1.02);
+}
+
+.song-info {
+    display: flex;
+    align-items: center;
+}
+
+.song-info img {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.song-details h4 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.play-button {
+    padding: 10px 20px;
+    background-color: #ff4081;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Music Player */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 120px; /* Fixed height */
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.3); /* Adds shadow for better visibility */
+    box-sizing: border-box;
+}
+
+/* Song title in the player */
+.player-info {
+    flex-grow: 2; /* Increase flex-grow to give it more space */
+    text-align: left;
+    padding-left: 20px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncate long song titles with ellipses */
+    min-width: 0; /* Ensure truncation */
+    flex: 1;
+    min-width: 0;
+}
+
+.player-info h4 {
+    margin: 0;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+/* Player controls */
+.player-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0; /* Ensure controls do not shrink */
+    flex: 2;
+    justify-content: center;
+}
+
+.player-controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Seek bar container */
+.seek-bar-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.seek-bar {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.time-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Volume control adjustment to make it fully visible */
+.volume-control {
+    width: 100px;
+    margin-right: 15px; /* Moves volume control to the left */
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}

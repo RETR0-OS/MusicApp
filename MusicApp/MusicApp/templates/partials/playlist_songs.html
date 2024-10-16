@@ -1,0 +1,14 @@
+<!-- partials/playlist_songs.html -->
+{% load static %}
+{% for song in songs %}
+    <div class="song-item mb-3" data-song="{{ song.song_mp3.url }}" data-title="{{ song.title }}" data-artist="{{ song.artist }}">
+        <div class="song-info">
+            <img src="{% static 'images/songIcon.png' %}" alt="Album Art">
+            <div class="song-details">
+                <h4>{{ song.title }}</h4>
+                <p>{{ song.artists }}</p>
+            </div>
+        </div>
+        <button class="play-button">Play</button>
+    </div>
+{% endfor %}

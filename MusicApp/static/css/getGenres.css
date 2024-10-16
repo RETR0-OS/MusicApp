@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2d3e50; /* Dark background as seen in the screenshot */
+    color: #ffffff; /* White text for contrast */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #ff6584; /* Pink color matching your logo */
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #ffffff; /* Keeping the text white for contrast */
+}
+
+.form-section {
+    background-color: #34495e; /* Slightly lighter background section */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #ffffff; /* White text for the label */
+}
+
+select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ff6584; /* Pink border for dropdown */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #2d3e50; /* Darker background for the dropdown */
+    color: #ffffff; /* White text in the dropdown */
+    height: 150px; /* Height to show multiple options */
+}
+
+select[multiple] {
+    overflow-y: scroll;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ff6584; /* Pink border for the input box */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #2d3e50; /* Dark background for input */
+    color: #ffffff; /* White text for the input */
+}
+
+.submit-button {
+    background-color: #ff6584; /* Pink button to match the design */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #ff7b96; /* Slightly lighter pink on hover */
+}

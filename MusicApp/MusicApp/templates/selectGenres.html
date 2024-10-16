@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescendo - Choose Your Music Genre</title>
+    <link rel="stylesheet" href="{% static 'css/getGenres.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Crescendo</h1>
+            <p>Select your preferred genres to tailor your experience.</p>
+        </header>
+        <div class="form-section">
+            <form id="genre-form" action="{% url 'accounts:setProfile' %}" method="POST" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <label for="genres">Choose at least 3 favorite genres:</label>
+                <select id="genres" name="genres" multiple>
+                    <option value="pop">Pop</option>
+                    <option value="rock">Rock</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="classical">Classical</option>
+                    <option value="hiphop">Hip-Hop</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="blues">Blues</option>
+                    <option value="country">Country</option>
+                    <option value="reggae">Romance</option>
+                </select>
+
+                <label for="other-genre">If not listed, type your genre here:</label>
+                <input type="text" id="other-genre" name="other_genre" placeholder="Type your genre here">
+
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            const selectedGenres = document.getElementById('genres').selectedOptions;
+            if (selectedGenres.length < 3) {
+                alert('Please select at least 3 genres.');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/showPlaylistSongs.css' %}">
+{% endblock %}
+{% block content %}
+    <!-- Playlist Section -->
+    <section class="playlist-section">
+
+        <div class="playlist-header">
+            <h2>Favourites</h2>
+            <p>Your personal hearted hearty beats</p>
+        </div>
+
+        <div class="container">
+            <div id="autocomplete" class="autocomplete mb-4 mt-4">
+              <input id="autocomplete-input" class="autocomplete-input col-12 bg-dark form-control text-light"/>
+              <ul class="autocomplete-result-list bg-dark text-light"></ul>
+            </div>
+        </div>
+
+        <div class="song-list">
+            <!-- Add new song controls -->
+            <div id="new_song_add_controls">
+                <div class="song-item" data-title="New Song" data-artist="">
+                    <div class="song-info">
+                        <img src="{% static 'images/songIcon.png' %}" alt="Album Art">
+                        <div class="song-details">
+                            <h4>New Song</h4>
+                            <p>Add a New Song</p>
+                        </div>
+                    </div>
+                    <button class="play-button" data-bs-toggle="modal" data-bs-target="#addSongModal">Add Song</button>
+                </div>
+                    <div class="modal fade" id="addSongModal" tabindex="-1" aria-labelledby="addSongModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content" style="background-color:#2b3f4f">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addSongModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="container">
+                                <div id="autocomplete-universalSearch" class="autocomplete mb-4 mt-4">
+                                  <input id="autocomplete-input-universalPlaylistSearch" class="autocomplete-input col-12 bg-dark form-control text-light"/>
+                                  <ul class="autocomplete-result-list bg-dark text-light"></ul>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+            <div id="playlist_songs">
+                <!-- Playlist songs listings -->
+                {% for song in songs %}
+                    <div class="song-item mb-3" data-song="{{ song.song_mp3.url }}" data-title="{{ song.title }}" data-artist="{{ song.artist }}">
+                        <div class="song-info">
+                            <img src="{% static 'images/songIcon.png' %}" alt="Album Art">
+                            <div class="song-details">
+                                <h4>{{ song.title }}</h4>
+                                <p>{{ song.artists }}</p>
+                            </div>
+                        </div>
+                        <button class="play-button">Play</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Music Player -->
+    <footer class="music-player fixed-bottom">
+        <!-- Top row: Title, Seek Bar (Timeline), Volume -->
+        <div class="player-top">
+            <!-- Song Title -->
+            <div class="player-info">
+                <h4 id="current-song-title">Song Title</h4>
+            </div>
+
+            <!-- Song progress slider (Seek bar) -->
+            <div class="seek-bar-container">
+                <input type="range" min="0" max="100" value="0" class="seek-bar" id="seek-bar">
+                <div class="time-info">
+                    <span id="current-time">00:00</span>
+                    <span id="total-duration">00:00</span>
+                </div>
+            </div>
+
+            <!-- Volume Control -->
+            <div class="volume-control">
+                <input type="range" min="0" max="100" value="50" class="volume-slider" id="volume-control">
+            </div>
+        </div>
+
+        <!-- Bottom row: Music Controls -->
+        <div class="player-bottom">
+            <div class="player-controls">
+                <button class="prev-track">⏮</button>
+                <button class="play-pause">⏯</button>
+                <button class="next-track">⏭</button>
+                <button class="shuffle-button">🔀</button>
+            </div>
+        </div>
+    </footer>
+
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        new Autocomplete('#autocomplete', {
+        search: input => {
+            const url = "{% url 'songPlayer:searchFavourites' %}?search_playlist=" + encodeURIComponent(input);
+            return new Promise(resolve => {
+                fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Ensure the data returned is an array
+                    if (Array.isArray(data.data)) {
+                        resolve(data.data);
+                    } else {
+                        console.error('Expected an array but got:', data.data);
+                        resolve([]);  // Resolve with an empty array if not valid
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching playlist data:', error);
+                    resolve([]);  // Resolve with an empty array in case of an error
+                });
+            });
+        },
+        renderResult: (result, props) => {
+            let group = '';
+            if (result.index % 3 === 0) {
+                group = `<li class="group">Group</li>`;
+            }
+            return `
+            ${group}
+            <li ${props} class="autocomplete-result playlist-search" data-songurl="${result.song_mp3}" data-artists="${result.artists}" data-title="${result.title}">
+                <div class="wiki-title">
+                   ${result.title} | ${result.artists}
+                </div>
+            </li>`;
+        },
+        onSubmit: (result) => {
+            const searchInput = document.querySelector('#autocomplete-input');
+            searchInput.value = result.title + " | " + result.artists;  // Set the input value to the result's title and artists
+        }
+    });
+
+    // Handling click on autocomplete result to play song
+    document.addEventListener('click', function(event) {
+        const clickedItem = event.target.closest('.playlist-search');
+        if (clickedItem) {
+            console.log("click");
+            const songURL = clickedItem.getAttribute('data-songurl');
+            const artists = clickedItem.getAttribute('data-artists');
+            const title = clickedItem.getAttribute('data-title');
+            playSong(songURL, title, artists);  // Call the playSong function from playAudio.js
+        }
+    });
+    </script>
+
+    <script>
+        new Autocomplete('#autocomplete-universalSearch', {
+            search: input => {
+                const url = '{% url "songsManager:searchSongs" %}' + "?song=" + encodeURIComponent(input);
+                return new Promise(resolve => {
+                    fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ensure the data returned is an array
+                        if (Array.isArray(data.data)) {
+                            resolve(data.data);
+                        } else {
+                            console.error('Expected an array but got:', data.data);
+                            resolve([]);  // Resolve with an empty array if not valid
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching playlist data:', error);
+                        resolve([]);  // Resolve with an empty array in case of an error
+                    });
+                });
+            },
+            renderResult: (result, props) => {
+                let group = '';
+                if (result.index % 3 === 0) {
+                    group = `<li class="group">Group</li>`;
+                }
+                return `
+                ${group}
+                <li ${props} class="autocomplete-result uni-search" data-songid="${result.id}" data-artists="${result.artists}" data-title="${result.title}">
+                    <div class="wiki-title">
+                       ${result.title}
+                    </div>
+                    <div class="wiki-paragraph">
+                        ${result.artists}
+                    </div>
+                </li>`;
+            },
+            onSubmit: (result) => {
+                const searchInput = document.querySelector('#autocomplete-input');
+                searchInput.value = result.title + " by " + result.artists;  // Set the input value to the result's title and artists
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+        const clickedItem = event.target.closest('.uni-search');
+        if (clickedItem) {
+            const songID = clickedItem.getAttribute('data-songid');
+            const artists = clickedItem.getAttribute('data-artists');
+            const title = clickedItem.getAttribute('data-title');
+            const url = "{% url 'songPlayer:addSongToFavourites' 0 %}".replace('0', songID);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'                }
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Song added successfully');
+                    refreshFavouriteSongs();
+                } else {
+                    console.error('Error adding the song');
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
+    });
+    </script>
+
+    <script>
+        new Autocomplete('#autocomplete-universalSearch', {
+            search: input => {
+                const url = '{% url "songsManager:searchSongs" %}' + "?song=" + encodeURIComponent(input);
+                return new Promise(resolve => {
+                    fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ensure the data returned is an array
+                        if (Array.isArray(data.data)) {
+                            resolve(data.data);
+                        } else {
+                            console.error('Expected an array but got:', data.data);
+                            resolve([]);  // Resolve with an empty array if not valid
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching playlist data:', error);
+                        resolve([]);  // Resolve with an empty array in case of an error
+                    });
+                });
+            },
+            renderResult: (result, props) => {
+                let group = '';
+                if (result.index % 3 === 0) {
+                    group = `<li class="group">Group</li>`;
+                }
+                return `
+                ${group}
+                <li ${props} class="autocomplete-result uni-search" data-songid="${result.id}" data-artists="${result.artists}" data-title="${result.title}">
+                    <div class="wiki-title">
+                       ${result.title}
+                    </div>
+                    <div class="wiki-paragraph">
+                        ${result.artists}
+                    </div>
+                </li>`;
+            },
+            onSubmit: (result) => {
+                const searchInput = document.querySelector('#autocomplete-input');
+                searchInput.value = result.title + " by " + result.artists;  // Set the input value to the result's title and artists
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+        const clickedItem = event.target.closest('.uni-search');
+        if (clickedItem) {
+            const songID = clickedItem.getAttribute('data-songid');
+            const artists = clickedItem.getAttribute('data-artists');
+            const title = clickedItem.getAttribute('data-title');
+                const url = "{% url 'songPlayer:addSongToFavourites' 0 %}".replace('0', songID);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'                }
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Song added successfully');
+                    refreshFavouriteSongs()
+                } else {
+                    console.error('Error adding the song');
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
+    });
+    </script>
+
+    <script src="{% static 'js/playAudio.js' %}"></script>
+{% endblock %}

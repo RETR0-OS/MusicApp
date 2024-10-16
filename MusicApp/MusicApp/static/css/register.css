@@ -1,0 +1,176 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #2c3e50; /* dark blue background */
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align the form to the top with some space */
+    overflow-y: auto; /* Allow page scrolling if content overflows */
+    padding: 20px;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 600px; /* Limit the form width on larger screens */
+}
+
+.signup-box {
+    background-color: #34495e; /* slightly lighter than background */
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 60px auto; /* Add margin to the top to create spacing */
+    overflow: hidden; /* Prevent horizontal scroll */
+}
+
+.signup-box h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff3f81; /* pink title */
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 1rem;
+    color: #bdc3c7;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2c3e50; /* match body background */
+    color: #fff;
+    outline: none;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.input-group input::placeholder {
+    color: #bdc3c7;
+}
+
+/* Custom file input styling */
+.custom-file-input {
+    padding: 10px;
+    background-color: #34495e;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-file-input:hover {
+    background-color: #3c5467;
+}
+
+/* Genre tags input styling */
+.tags-input {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.tags-input input {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    flex: 1;
+}
+
+.tag {
+    background-color: #ff3f81;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.tag .close {
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Tags output textarea */
+#tags-output {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: #2c3e50;
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 5px;
+    resize: none;
+}
+
+/* Submit button styling */
+.signup-btn {
+    background-color: #ff3f81; /* pink button */
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-btn:hover {
+    background-color: #ff65a3; /* lighter pink on hover */
+}
+
+p {
+    color: #bdc3c7;
+    margin-top: 20px;
+}
+
+p a {
+    color: #ff3f81;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+p a:hover {
+    color: #ff65a3;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .signup-box {
+        padding: 30px;
+        margin: 10px;
+    }
+}

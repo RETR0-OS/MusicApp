@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+  <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="edit-profile-container">
+                    <h2 class="text-center mb-4">Edit Profile</h2>
+                    <form method="POST" action="{% url 'accounts:edit_profile' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3 text-center">
+                            {% if profile.profile_pic %}
+                                <img src="{{ profile.profile_pic.url }}" class="rounded-circle col-sm-3 mb-3 mt-3">
+                            {% else %}
+                                <img src="{% url '/media/defaults/default_user.svg' %}" class="rounded-circle col-sm-3 mb-3 mt-3">
+                            {% endif %}
+                            <input type="file" name="profile_pic" class="form-control" id="profilePicture">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" id="username" value="{{ request.user.username }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" value="{{ request.user.email }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{ request.user.first_name }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{ request.user.last_name }}">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

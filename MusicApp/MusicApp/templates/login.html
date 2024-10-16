@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login - Crescendo</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Login to Crescendo</h1>
+            <form action="{% url 'accounts:login' %}" class="login-form" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <p>Don't have an account? <a href="{% url 'accounts:register' %}">Sign up here</a></p>
+
+            <!-- Divider Line -->
+            <div class="divider">
+                <hr>
+                <span>or</span>
+                <hr>
+            </div>
+
+            <!-- Google Login Button -->
+            <div class="google-login">
+                <form action="{% url 'accounts:googleLogin' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="google">
+                        Login with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

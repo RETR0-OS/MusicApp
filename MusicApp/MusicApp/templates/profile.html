@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- Top Buttons: Edit Profile and Delete Account -->
+                    {% comment %}<div class="d-flex justify-content-between mb-4">
+                        <a href="{% url 'editProfile' user.id %}" class="btn btn-warning">Edit Profile</a>
+                        <a href="{% url 'deleteAccount' user.id %}" class="btn btn-danger">Delete Account</a>
+                    </div>{% endcomment %}
+
+                    <!-- Profile Card -->
+                    <div class="card p-4 text-dark">
+                        <div class="text-center mb-4">
+                            {% if user.profile_pic %}
+                                <img src="{{ user.profile_pic.url }}" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                            {% else %}
+                                <img src="{% static 'images/defaultProfilePic.jpg' %}" alt="{{ user.user.username }}" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                            {% endif %}
+                        </div>
+
+                        <h2 class="text-center">{{ user.user.username }}</h2>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h5>First Name:</h5>
+                                {% if user.user.first_name %}
+                                  <p>{{ user.user.first_name }}</p>
+                                {% else %}
+                                  <p>None</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Last Name:</h5>
+                                {% if user.user.last_name %}
+                                  <p>{{ user.user.last_name }}</p>
+                                {% else %}
+                                  <p>None</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 mt-3">
+                                <h5>Email:</h5>
+                                {% if user.user.email %}
+                                    <p>{{ user.user.email }}</p>
+                                {% else %}
+                                    <p>No email set</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Buttons: Edit Profile and Delete Account -->
+                    {% comment %}<div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'editProfile' user.id %}" class="btn btn-warning">Edit Profile</a>
+                        <a href="{% url 'deleteAccount' user.id %}" class="btn btn-danger">Delete Account</a>
+                    </div>{% endcomment %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

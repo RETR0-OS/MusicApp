@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crescendo - Free Music Streaming</title>
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <h1>Crescendo</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+            </ul>
+            <button onclick="location.href='{% url 'accounts:register' %}'" class="login-btn">Sign up</button>
+        </nav>
+
+        <img src="{% static 'images/landing_page.webp' %}" style="height:100vh; width:100%">
+
+        <header class="hero-section">
+            <div class="hero-content ">
+                <h2>Unlimited Music. Zero Cost.</h2>
+                <p>Discover and stream millions of tracks from your favorite artists, all completely free of charge. With no premium plans or hidden fees, you can enjoy pure, uninterrupted music anytime, anywhere. Whether you're into pop, rock, jazz, or classical, there's something for everyone. Dive into a vast library of songs, create your own playlists, and explore new genres without spending a dime. Experience the joy of music without any limitations or subscriptions. Just pure, unadulterated tunes at your fingertips.</p>
+                <a href="{% url 'songPlayer:songsDashboard' %}" class="cta-btn">Start Streaming</a>
+            </div>
+        </header>
+
+        <section id="features" class="features-section">
+            <div class="feature-card">
+                <h3>Curated Playlists</h3>
+                <p>Discover playlists that suit your mood, genre, or time of day.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Unlimited Streaming</h3>
+                <p>Stream your favorite tracks without any interruptions or paywalls.</p>
+            </div>
+            <div class="feature-card">
+                <h3>New Songs Every Week</h3>
+                <p>Find the latest hits updated every week to keep you up with the times.</p>
+            </div>
+        </section>
+
+        <!--<footer>
+            <p>&copy; 2024 Crescendo - Free Music for Everyone</p>
+        </footer>-->
+    </div>
+</body>
+</html>

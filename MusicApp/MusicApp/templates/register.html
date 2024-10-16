@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup - Crescendo</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-box">
+            <h1>Create Your Account</h1>
+            <form action="{% url 'accounts:register' %}" class="signup-form" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first-name" name="first_name" placeholder="Enter your first name">
+                </div>
+                <div class="input-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name">
+                </div>
+                <div class="input-group">
+                    <label for="profile-picture">Profile Picture (Optional)</label>
+                    <input type="file" id="profile-picture" name="profile_picture" class="custom-file-input">
+                </div>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password">
+                </div>
+                <div class="input-group">
+                    <label for="genre-preferences">Favorite Music Genres/ Artists</label>
+                    <div class="tags-input">
+                        <input type="text" name="genres" placeholder="Enter genres (press enter)">
+                    </div>
+                    <textarea id="tags-output" rows="3" readonly placeholder="Your selected genres will appear here..."></textarea>
+                </div>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+
+            <!-- Divider Line -->
+            <div class="divider">
+                <hr>
+                <span>or</span>
+                <hr>
+            </div>
+
+            <!-- Google Login Button -->
+            <div class="google-login">
+                <form action="{% url 'accounts:googleLogin' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="google">
+                        Signup with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle adding genre tags
+        const tagsInput = document.querySelector('.tags-input input');
+        const tagsContainer = document.querySelector('.tags-input');
+        const tagsOutput = document.getElementById('tags-output');
+        let tags = [];
+
+        tagsInput.addEventListener('keyup', (e) => {
+            if (e.key === ' ' && tagsInput.value.trim() !== '') {
+                const tag = tagsInput.value.trim();
+                if (!tags.includes(tag)) {
+                    tags.push(tag);
+                    const tagElement = document.createElement('span');
+                    tagElement.classList.add('tag');
+                    tagElement.textContent = tag;
+
+                    const closeIcon = document.createElement('span');
+                    closeIcon.textContent = '×';
+                    closeIcon.classList.add('close');
+                    closeIcon.addEventListener('click', () => {
+                        tagsContainer.removeChild(tagElement);
+                        tags = tags.filter(t => t !== tag);
+                        updateTagsOutput();
+                    });
+
+                    tagElement.appendChild(closeIcon);
+                    tagsContainer.insertBefore(tagElement, tagsInput);
+                }
+                tagsInput.value = '';
+                updateTagsOutput();
+            }
+        });
+
+        function updateTagsOutput() {
+            tagsOutput.value = tags.join(', ');
+        }
+    </script>
+</body>
+</html>

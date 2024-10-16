@@ -1,0 +1,65 @@
+.add-playlist{
+    background-color:#e04986
+}
+
+.add-playlist:hover{
+    background-color:#cc4276;
+}
+
+.library-section {
+    padding: 40px;
+    background-color: #34495e; /* Maintain consistency with music section background */
+}
+
+.library-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Adjust grid as needed for layout */
+    gap: 20px;
+}
+
+.playlist-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.playlist-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.playlist-card img {
+    width: 100%;
+    height: auto;
+}
+
+.playlist-card h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.play-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 16px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.playlist-card:hover .play-button {
+    opacity: 1;
+}
