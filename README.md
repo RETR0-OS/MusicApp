@@ -1,7 +1,7 @@
 ﻿# MusicApp - Crescendo
  
 ## Project Description
-MusicApp is a web application that allows users to register, log in, and manage their music preferences. It integrates with Spotify and Google for authentication and provides a personalized music experience based on user preferences. Crescendo takes your spotify playlist and makes it completely offline to avoid adds and give a seemless listening experience.
+Crescendo is a web application that allows users to register, log in, and manage their music preferences. It integrates with Spotify and Google for authentication and provides a personalized music experience based on user preferences. Crescendo takes your spotify playlist and makes it completely offline to avoid adds and give a seemless listening experience.
 
 ## Features
 - User registration and login
